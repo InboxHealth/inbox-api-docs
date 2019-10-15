@@ -15,7 +15,9 @@
 
 ## Subscribing Webhooks
 
+## FAQs
+
 > Written with [StackEdit](https://stackedit.io/).
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNDE1OTMxMjc1XX0=
+eyJoaXN0b3J5IjpbMTMwMTgwMzY1Ml19
 -->
