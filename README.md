@@ -83,14 +83,13 @@ We're currently working on more documentation, but between these initial example
 Looking forward to working with you!
 
 ## Authentication
-To authenticate your API to Inbox Health, add the API Key you generated above to each HTTP request as your Username via HTTP Basic Authentication.  If you are unfamiliar with this practice and do not  have a HTTP client that supports Basic Authentication on requests, you can implement yourself pretty easily by adding the header
+Inbox Health's API utilizes "HTTP Basic Authentication" with the API key acting as the username in each request.
+
+Add the API Key you generated via the Partner portal above to each HTTP request as your Username via HTTP Basic Authentication.  If you are unfamiliar with this practice and do not  have a HTTP client that supports Basic Authentication on requests, you can implement yourself pretty easily by adding the header
 ``` 
 Authorization: Basic <credentials>
 ```
  where `<credentials>` is your API Key with a colon suffix, base 64 encoded i.e. `<API_KEY>:` .
-
-- Generating API Keys
-- Adding Authorization header to HTTP requests
 
 ## Onboarding New Users
 - Creating new Enterprises and why
@@ -105,5 +104,5 @@ Authorization: Basic <credentials>
 
 > Written with [StackEdit](https://stackedit.io/).
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjA4MzMwMjUwNSwxMzAxODAzNjUyXX0=
+eyJoaXN0b3J5IjpbMjA5NDYwMDg1MywxMzAxODAzNjUyXX0=
 -->
