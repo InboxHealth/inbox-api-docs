@@ -58,6 +58,7 @@ JSON Body:
 }  
 ```
 The HTTP Response returned from Inbox Health as it will look something like this:
+
 ```
 ```
 
@@ -69,13 +70,13 @@ Now that you've created your first test Enterprise, let's create the first Patie
 ```
 {  
 	"patient":{  
-	"first_name":"Test First Name",  
-	"last_name":"Test Last Name",  
-	"date_of_birth":"1987-07-23",  
-	"sex":"Male",  
-	"email":"[testemail@inboxhealth.com](mailto:testemail@inboxhealth.com)",  
-	"**enterprise_id**": <<Enterprise ID returned above>>  
-}  
+		"first_name":"Test First Name",  
+		"last_name":"Test Last Name",  
+		"date_of_birth":"1987-07-23",  
+		"sex":"Male",  
+		"email":"testemail@inboxhealth.com",  
+		"enterprise_id": <<Enterprise ID returned above>>  
+	}  
 }  
 ```
 We're currently working on more documentation, but between these initial examples and the swagger docs I hope you'll be able to get a decent start the feel of the API itself. Don't hesitate to contact us either by email or Slack for quicker responses in our new mutual channe
@@ -92,6 +93,6 @@ This section covers how to define new BillingCycleTemplates, control existing Bi
 
 > Written with [StackEdit](https://stackedit.io/).
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTUyMzU2Mjg1MCwtNjgxNDUzMDM1LDEzMD
+eyJoaXN0b3J5IjpbLTg0MzM5MTg0OCwtNjgxNDUzMDM1LDEzMD
 E4MDM2NTJdfQ==
 -->
