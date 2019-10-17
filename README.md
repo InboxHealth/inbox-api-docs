@@ -80,9 +80,10 @@ Now that you've created your first test Enterprise, let's create the first Patie
 ```
 We're currently working on more documentation, but between these initial examples and the swagger docs I hope you'll be able to get a decent start the feel of the API itself. Don't hesitate to contact us either by email or Slack for quicker responses in our new mutual channe
 
-## Creating Patients
+## Managing Patient Balances
+This section will cover how to create new Invoice, LineItem, and Payment records to assign, update and manage a Patient's balance in Inbox Health over time.
 
-## Assigning Patients a Balance
+## Sending and Controlli
 
 ## Subscribing Webhooks
 
@@ -90,6 +91,6 @@ We're currently working on more documentation, but between these initial example
 
 > Written with [StackEdit](https://stackedit.io/).
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTE3NjMxMDk0MiwtNjgxNDUzMDM1LDEzMD
-E4MDM2NTJdfQ==
+eyJoaXN0b3J5IjpbLTEyMTA4MDk4NTEsLTY4MTQ1MzAzNSwxMz
+AxODAzNjUyXX0=
 -->
