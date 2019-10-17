@@ -19,8 +19,9 @@ Authorization: Basic <credentials>
  where `<credentials>` is your API Key with a colon suffix, base 64 encoded i.e. `<API_KEY>:` .
 
 ## Onboarding New Clients
+
 ### Creating an Enterprise
-I'll be emailing you a detailed instructions that document the first use case, which would outline how to POST and create first an "Enterprise" along with its child "Practices" (locations) using the POST /enterprises resource, and then how to subsequently post new "Patient" models that belong to that Enterprise. For now, I'd recommend trying to send a basic Enterprise with one sub "Practice" (facility) to the following endpoint:  
+The first step to onboarding a new client to the Inbox Health platform is to create their Enterprise record For now, I'd recommend trying to send a basic Enterprise with one sub "Practice" (facility) to the following endpoint:  
 
 [demo.inboxhealth.com/api/partner/v2/enterprises](http://demo.inboxhealth.com/api/partner/v2/enterprises)  
 
@@ -29,39 +30,39 @@ JSON Body:
 ```
 {  
 	"enterprise": {  
-	"name": "Mental Health/Substance Abuse Medical ",  
-	"city": "New Haven",  
-	"state": "CT",  
-	"address_line_1": "770 Chapel St",  
-	"address_line_2": null,  
-	"zip": "06512",  
-	"support_phone_number": "(203) 415-3486",  
-	"sales_tax": 0,  
-	"default_quick_pay_description": "Copay",  
-	"logo_background_color": null,  
-	"default_checkin_routes": null,  
-	"statement_descriptor": "BANK STATEMENT DESCRIPTOR OVERRIDE",  
-	"time_zone": "Eastern Time (US & Canada)",  
-	"color_statements": true,  
-	"first_class": true,  
-	"return_envelope": true,  
-	"perforation": true,
-	"practices_attributes": [
-		{  
-			"name": "My First Mental Health Facility",  
-			"address_line_1": "Address line 1 placeholder",  
-			"city": "City Placeholder",  
-			"state": "New York",  
-			"time_zone": "Eastern Time (US & Canada)"  
-		}
-	]  
+		"name": "Mental Health/Substance Abuse Medical ",  
+		"city": "New Haven",  
+		"state": "CT",  
+		"address_line_1": "770 Chapel St",  
+		"address_line_2": null,  
+		"zip": "06512",  
+		"support_phone_number": "(203) 415-3486",  
+		"sales_tax": 0,  
+		"default_quick_pay_description": "Copay",  
+		"logo_background_color": null,  
+		"default_checkin_routes": null,  
+		"statement_descriptor": "BANK STATEMENT DESCRIPTOR OVERRIDE",  
+		"time_zone": "Eastern Time (US & Canada)",  
+		"color_statements": true,  
+		"first_class": true,  
+		"return_envelope": true,  
+		"perforation": true,
+		"practices_attributes": [
+			{  
+				"name": "My First Mental Health Facility",  
+				"address_line_1": "Address line 1 placeholder",  
+				"city": "City Placeholder",  
+				"state": "New York",  
+				"time_zone": "Eastern Time (US & Canada)"  
+			}
+		]  
 	}  
 }  
 ```
   
 
-### Adding Patients
-
+### Creating Patients
+Now that you've created your first Enterprise (client), you will likely want t
 {  
 "patient":{  
 "first_name":"Test First Name",  
@@ -85,5 +86,5 @@ We're currently working on more documentation, but between these initial example
 
 > Written with [StackEdit](https://stackedit.io/).
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjA5MjgyODY3NCwxMzAxODAzNjUyXX0=
+eyJoaXN0b3J5IjpbLTY4MTQ1MzAzNSwxMzAxODAzNjUyXX0=
 -->
