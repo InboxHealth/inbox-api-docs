@@ -266,10 +266,11 @@ Now that you've created your first test Enterprise, let's create the first Patie
 		"date_of_birth":"1987-07-23",  
 		"sex":"Male",  
 		"email":"testemail@inboxhealth.com",  
-		"enterprise_id":   
+		"enterprise_id": 47  
 	}  
 }  
 ```
+Note that the Enterprise ID (47 in the example case above) should be the ID you stored from the prior Enterprise POST request.
 
 ## Managing Patient Balances
 This section covers how to create new Invoice, LineItem, and Payment records to assign, update and manage a Patient's balance in Inbox Health over time.
@@ -286,6 +287,6 @@ Please don't hesitate to ask questions via our email, Slack or GitHub Issues.  W
 ## Forthcoming Documentation
 We're currently working on more documentation, but between these initial examples and the swagger docs I hope you'll be able to get a decent start the feel of the API itself. Don't hesitate to contact us by email, GitHub Issues, or Slack for quicker responses.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwODcxMDg2NzQsMjA5MzUwMDAzNywtOD
+eyJoaXN0b3J5IjpbLTEwNjUzNDAyNjMsMjA5MzUwMDAzNywtOD
 QzMzkxODQ4LC02ODE0NTMwMzUsMTMwMTgwMzY1Ml19
 -->
