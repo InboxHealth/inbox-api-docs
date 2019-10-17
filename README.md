@@ -21,7 +21,7 @@ Authorization: Basic <credentials>
 ## Onboarding New Clients
 
 ### Creating an Enterprise
-The "Enterprise" model is the central record in Inbox Health's API Entities that represents a new customer seeking to bill their patients (whether it is a Hospital, Medical Practice, Therapy Group, or other medical organization).  Thus, the first step to onboarding a new client to the Inbox Health platform is to create their Enterprise record that corresponds to their business and will serve to define many of the basic properties. For now, we will review creating a basic Enterprise with one sub "Practice" (facility).  Once this test enterprise:  
+The "Enterprise" model is the central record in Inbox Health's API Entities that represents a new customer seeking to bill their patients (whether it is a Hospital, Medical Practice, Therapy Group, or other medical organization).  Thus, the first step to onboarding a new client to the Inbox Health platform is to create their Enterprise record that corresponds to their business and will serve to define many of the basic properties. For now, we will review creating a basic Enterprise with one sub "Practice" (facility) and let Inbox Health set many of the default properties for us:  
 
 [demo.inboxhealth.com/api/partner/v2/enterprises](http://demo.inboxhealth.com/api/partner/v2/enterprises)  
 
@@ -30,7 +30,7 @@ JSON Body:
 ```
 {  
 	"enterprise": {  
-		"name": "Elay New Haven Hospital",  
+		"name": "City of New Haven University Hospital",  
 		"city": "New Haven",  
 		"state": "CT",  
 		"address_line_1": "770 Chapel St",  
@@ -49,10 +49,10 @@ JSON Body:
 		"perforation": true,
 		"practices_attributes": [
 			{  
-				"name": "My First Mental Health Facility",  
+				"name": "New Haven Emergency Room",  
 				"address_line_1": "Address line 1 placeholder",  
 				"city": "City Placeholder",  
-				"state": "New York",  
+				"state": "Connecticut",  
 				"time_zone": "Eastern Time (US & Canada)"  
 			}
 		]  
@@ -86,6 +86,6 @@ We're currently working on more documentation, but between these initial example
 
 > Written with [StackEdit](https://stackedit.io/).
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQwNzYyNDE1OCwtNjgxNDUzMDM1LDEzMD
+eyJoaXN0b3J5IjpbMTgwNjc3NDAzMywtNjgxNDUzMDM1LDEzMD
 E4MDM2NTJdfQ==
 -->
