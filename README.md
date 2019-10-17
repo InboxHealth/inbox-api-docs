@@ -79,7 +79,6 @@ Now that you've created your first test Enterprise, let's create the first Patie
 	}  
 }  
 ```
-We're currently working on more documentation, but between these initial examples and the swagger docs I hope you'll be able to get a decent start the feel of the API itself. Don't hesitate to contact us either by email or Slack for quicker responses in our new mutual channe
 
 ## Managing Patient Balances
 This section covers how to create new Invoice, LineItem, and Payment records to assign, update and manage a Patient's balance in Inbox Health over time.
@@ -88,11 +87,16 @@ This section covers how to create new Invoice, LineItem, and Payment records to 
 This section covers how to define new BillingCycleTemplates, control existing BillingCycles, and send out-of-band communication such a Patient Tickets (SMS, email, and automated voice calls)
 
 ## Subscribing to Webhooks
-This section covers how to receive dynamic updates from Inbox Health via REST API webhooks that ensure API clients are immediately informed upon changes of relevant records in Inbox Health.  Whether the change originates from a patient, provider, administrator or automated system  
+This section covers how to receive dynamic updates from Inbox Health via REST API webhooks that ensure API clients are immediately informed upon changes of relevant records in Inbox Health.  Whether the change originates from a patient, provider, administrator or automated system these webhooks are triggered and immediately provide feedback
+ 
 ## FAQs
+Please don't hesitate to ask questions via our Slack or GitHub
+
+## Forthcoming Documentation
+We're currently working on more documentation, but between these initial examples and the swagger docs I hope you'll be able to get a decent start the feel of the API itself. Don't hesitate to contact us either by email or Slack for quicker responses in our new mutual channel
 
 > Written with [StackEdit](https://stackedit.io/).
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNDkzMDU1NjU3LC04NDMzOTE4NDgsLTY4MT
-Q1MzAzNSwxMzAxODAzNjUyXX0=
+eyJoaXN0b3J5IjpbLTk4ODM3MzMxMiwtODQzMzkxODQ4LC02OD
+E0NTMwMzUsMTMwMTgwMzY1Ml19
 -->
