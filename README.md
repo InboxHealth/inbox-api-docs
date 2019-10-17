@@ -1,7 +1,7 @@
 
 # Inbox Health Partner API
 
-This document is meant to accompany and provide a user-friendly overview of the full specifications of the Inbox Health Partner REST API, fully-documented at inboxhealth.com/api.  Plea
+This document is meant to accompany and provide a user-friendly overview of the full specifications of the Inbox Health Partner REST API, fully-documented at inboxhealth.com/api.  Reading and understand the data model and endpoints outlined by those full specifications is recommended.
 
 ## Introduction
 
@@ -31,5 +31,5 @@ Authorization: Basic <credentials>
 
 > Written with [StackEdit](https://stackedit.io/).
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1NDU1NDA3NzUsMTMwMTgwMzY1Ml19
+eyJoaXN0b3J5IjpbLTE1NzE2NDQxNDUsMTMwMTgwMzY1Ml19
 -->
