@@ -62,7 +62,7 @@ The HTTP Response returned from Inbox Health as it will look something like this
 
 
 ### Creating Patients
-Now that you've created your first Enterprise (client), you will likely want t
+Now that you've created your first test Enterprise, let's create the first Patient record to provide a central record to attach future Invoices (charges) and Payments.  Enterprises have many Patient records, and represent 
 {  
 "patient":{  
 "first_name":"Test First Name",  
@@ -87,6 +87,6 @@ We're currently working on more documentation, but between these initial example
 
 > Written with [StackEdit](https://stackedit.io/).
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTExNzI4MTA4MjgsLTY4MTQ1MzAzNSwxMz
-AxODAzNjUyXX0=
+eyJoaXN0b3J5IjpbMTk3NzIyMjg2OCwtNjgxNDUzMDM1LDEzMD
+E4MDM2NTJdfQ==
 -->
