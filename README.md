@@ -83,7 +83,7 @@ We're currently working on more documentation, but between these initial example
 Looking forward to working with you!
 
 ## Authentication
-To authenticate oneself by simply by adding key to as your Username using HTTP Basic Authentication. If your HTTP client library does not support Basic Authentication on requests out of the box, you can implement yourself pretty easily by adding the header
+To authenticate your API to Inbox Health, add the API Key you generated above to each HTTP request as your Username via HTTP Basic Authentication.  If you are unfamiliar with this practice and do not  have a HTTP client that supports Basic Authentication on requests, you can implement yourself pretty easily by adding the header
 ``` 
 Authorization: Basic <credentials>
 ```
@@ -105,5 +105,5 @@ Authorization: Basic <credentials>
 
 > Written with [StackEdit](https://stackedit.io/).
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjEyMDIzMDU4NiwxMzAxODAzNjUyXX0=
+eyJoaXN0b3J5IjpbMjA4MzMwMjUwNSwxMzAxODAzNjUyXX0=
 -->
