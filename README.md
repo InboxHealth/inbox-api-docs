@@ -252,11 +252,11 @@ The HTTP Response returned from Inbox Health as it will look something like this
 }
 ```
 
-Notice the many other valid attributes assigned default values
+Most importantly, store the `enterprise.id` field as this will serve as the unique identifier for this record and form the basis for many other requests for associated records.
 
 ### Creating Patients
 
-Now that you've created your first test Enterprise, let's create the first Patient record to provide a central record to attach future Invoices (charges) and Payments.  Patient records act similar to the Customer objects in other invoicing platforms and are tracked individually; their balances and properties along with the Enterprise's settings and the Enterprise's defined BillingCycleTemplates, govern how and when Inbox Health sends the Patient statements and communication.
+Now that you've created your first test Enterprise, let's create the first Patient record to provide a central record to attach future Invoices (charges) and Payments.  Patient records act similar to Customer objects seen in other invoicing platforms and are tracked individually; their balances and properties along with the Enterprise's settings and the Enterprise's defined BillingCycleTemplates, govern how and when Inbox Health sends the Patient statements and communication.
 
 ```
 {  
@@ -266,7 +266,7 @@ Now that you've created your first test Enterprise, let's create the first Patie
 		"date_of_birth":"1987-07-23",  
 		"sex":"Male",  
 		"email":"testemail@inboxhealth.com",  
-		"enterprise_id": <<Enterprise ID returned above>>  
+		"enterprise_id":   
 	}  
 }  
 ```
@@ -286,6 +286,6 @@ Please don't hesitate to ask questions via our email, Slack or GitHub Issues.  W
 ## Forthcoming Documentation
 We're currently working on more documentation, but between these initial examples and the swagger docs I hope you'll be able to get a decent start the feel of the API itself. Don't hesitate to contact us by email, GitHub Issues, or Slack for quicker responses.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzMyNDE5NDMxLDIwOTM1MDAwMzcsLTg0Mz
-M5MTg0OCwtNjgxNDUzMDM1LDEzMDE4MDM2NTJdfQ==
+eyJoaXN0b3J5IjpbLTEwODcxMDg2NzQsMjA5MzUwMDAzNywtOD
+QzMzkxODQ4LC02ODE0NTMwMzUsMTMwMTgwMzY1Ml19
 -->
