@@ -87,12 +87,12 @@ This section covers how to create new Invoice, LineItem, and Payment records to 
 ## Sending Statements and Communication
 This section covers how to define new BillingCycleTemplates, control existing BillingCycles, and send out-of-band communication such a Patient Tickets (SMS, email, and automated voice calls)
 
-## Subscribing Webhooks
-
+## Subscribing to Webhooks
+This section covers how to receive dynamic updates from Inbox Health via REST API webhooks that ensure API clients are immediately informed upon changes of relevant records in Inbox Health.  Whether the change originates from a patient, provider, administrator or automated system  
 ## FAQs
 
 > Written with [StackEdit](https://stackedit.io/).
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTg0MzM5MTg0OCwtNjgxNDUzMDM1LDEzMD
-E4MDM2NTJdfQ==
+eyJoaXN0b3J5IjpbNDkzMDU1NjU3LC04NDMzOTE4NDgsLTY4MT
+Q1MzAzNSwxMzAxODAzNjUyXX0=
 -->
