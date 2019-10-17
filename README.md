@@ -26,45 +26,41 @@ I'll be emailing you a detailed instructions that document the first use case, w
 
 JSON Body:
 
-  
-
-  
-
+```
 {  
-"enterprise": {  
-"name": "Mental Health/Substance Abuse Medical ",  
-"city": "New Haven",  
-"state": "CT",  
-"address_line_1": "770 Chapel St",  
-"address_line_2": null,  
-"zip": "06512",  
-"support_phone_number": "(203) 415-3486",  
-"sales_tax": 0,  
-"default_quick_pay_description": "Copay",  
-"logo_background_color": null,  
-"default_checkin_routes": null,  
-"statement_descriptor": "BANK STATEMENT DESCRIPTOR OVERRIDE",  
-"time_zone": "Eastern Time (US & Canada)",  
-"color_statements": true,  
-"first_class": true,  
-"return_envelope": true,  
-"perforation": true,
-
-"practices_attributes": [{  
-"name": "My First Mental Health Facility",  
-"address_line_1": "Address line 1 placeholder",  
-"city": "City Placeholder",  
-"state": "New York",  
-"time_zone": "Eastern Time (US & Canada)"  
-}]  
+	"enterprise": {  
+	"name": "Mental Health/Substance Abuse Medical ",  
+	"city": "New Haven",  
+	"state": "CT",  
+	"address_line_1": "770 Chapel St",  
+	"address_line_2": null,  
+	"zip": "06512",  
+	"support_phone_number": "(203) 415-3486",  
+	"sales_tax": 0,  
+	"default_quick_pay_description": "Copay",  
+	"logo_background_color": null,  
+	"default_checkin_routes": null,  
+	"statement_descriptor": "BANK STATEMENT DESCRIPTOR OVERRIDE",  
+	"time_zone": "Eastern Time (US & Canada)",  
+	"color_statements": true,  
+	"first_class": true,  
+	"return_envelope": true,  
+	"perforation": true,
+	"practices_attributes": [
+		{  
+			"name": "My First Mental Health Facility",  
+			"address_line_1": "Address line 1 placeholder",  
+			"city": "City Placeholder",  
+			"state": "New York",  
+			"time_zone": "Eastern Time (US & Canada)"  
+		}
+	]  
+	}  
 }  
-}  
-
+```
   
 
-### Adding Patient
-
-  
+### Adding Patients
 
 {  
 "patient":{  
@@ -77,7 +73,6 @@ JSON Body:
 }  
 }  
   
-
 We're currently working on more documentation, but between these initial examples and the swagger docs I hope you'll be able to get a decent start the feel of the API itself. Don't hesitate to contact us either by email or Slack for quicker responses in our new mutual channe
 - 
 ## Creating Patients
@@ -90,5 +85,5 @@ We're currently working on more documentation, but between these initial example
 
 > Written with [StackEdit](https://stackedit.io/).
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzk0NTAzOTk5LDEzMDE4MDM2NTJdfQ==
+eyJoaXN0b3J5IjpbMjA5MjgyODY3NCwxMzAxODAzNjUyXX0=
 -->
