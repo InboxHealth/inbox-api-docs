@@ -8,11 +8,10 @@ Logging in to our Partner Portal at inboxhealth.com/partner will immediately bri
 Authorization: Basic <credentials>
 ```
 
- where `<credentials>` is a base64 encoded `"${API_KEY}:"` . Let me know if you have any trouble with this step
+ where `<credentials>` is a base64 encoded `API_KEY:` .
 
-  
 
-After logging in, you should be able to go our partner documentation page at [demo.inboxhealth.com/api](http://demo.inboxhealth.com/api) . This page can take a little while to load as the Swagger UI pulls in the documentation directly from the endpoints, but after all the requests have finished, each of the main model resources listed on the page should expand with the valid operations that can be performed against each one. You'll notice that you can perform any of the API actions by supplying parameters and hitting the "Try It." This works because the API falls back to cookie-based authentication if the "Authorization" HTTP Header is not present. Feel free to experiment with these, but also note that the User Interface at [demo.inboxhealth.com/partner](http://demo.inboxhealth.com/partner) also utilizes these exact requests to render your information in this UI, so feel free to use your Web Browser's Networks tab in its Developer Tools to explore how you can use some of its requests.
+Review our partner documentation page at [demo.inboxhealth.com/api](http://demo.inboxhealth.com/api) .  After all the requests have finished, each of the main model resources listed on the page should expand with the valid operations that can be performed against each one. You'll notice that you can perform any of the API actions by supplying parameters and hitting the "Try It." This works because the API falls back to cookie-based authentication if the "Authorization" HTTP Header is not present. Feel free to experiment with these, but also note that the User Interface at [demo.inboxhealth.com/partner](http://demo.inboxhealth.com/partner) also utilizes these exact requests to render your information in this UI, so feel free to use your Web Browser's Networks tab in its Developer Tools to explore how you can use some of its requests.
 
   
 
@@ -112,5 +111,5 @@ Looking forward to working with you!
 
 > Written with [StackEdit](https://stackedit.io/).
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4MjAwOTEyNDcsMTMwMTgwMzY1Ml19
+eyJoaXN0b3J5IjpbLTEwODY5MTE0NzgsMTMwMTgwMzY1Ml19
 -->
