@@ -90,13 +90,11 @@ This section covers how to define new BillingCycleTemplates, control existing Bi
 This section covers how to receive dynamic updates from Inbox Health via REST API webhooks that ensure API clients are immediately informed upon changes of relevant records in Inbox Health.  Whether the change originates from a patient, provider, administrator or automated system these webhooks are triggered and immediately provide feedback
  
 ## FAQs
-Please don't hesitate to ask questions via our Slack or GitHub
+Please don't hesitate to ask questions via our email, Slack or GitHub Issues.  We'll update this section with common questions as we work to flesh out our documentation.
 
 ## Forthcoming Documentation
-We're currently working on more documentation, but between these initial examples and the swagger docs I hope you'll be able to get a decent start the feel of the API itself. Don't hesitate to contact us either by email or Slack for quicker responses in our new mutual channel
-
-> Written with [StackEdit](https://stackedit.io/).
+We're currently working on more documentation, but between these initial examples and the swagger docs I hope you'll be able to get a decent start the feel of the API itself. Don't hesitate to contact us by email, GitHub Issues, or Slack for quicker responses.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTk4ODM3MzMxMiwtODQzMzkxODQ4LC02OD
+eyJoaXN0b3J5IjpbMjA5MzUwMDAzNywtODQzMzkxODQ4LC02OD
 E0NTMwMzUsMTMwMTgwMzY1Ml19
 -->
