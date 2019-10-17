@@ -21,8 +21,7 @@ Authorization: Basic <credentials>
 ## Onboarding New Clients
 
 ### Creating an Enterprise
-Inbox Health's central model that represents a new customer seeking to bill their patients (whether it is a Hospital, Medical Practice, Therapy Group, or other organization)
-The first step to onboarding a new client to the Inbox Health platform is to create their Enterprise record For now, I'd recommend trying to send a basic Enterprise with one sub "Practice" (facility) to the following endpoint:  
+The "Enterprise" model is the central record in Inbox Health's API Entities that represents a new customer seeking to bill their patients (whether it is a Hospital, Medical Practice, Therapy Group, or other medical organization).  Thus, the first step to onboarding a new client to the Inbox Health platform is to create their Enterprise record that corresponds to their business and will serve to define many of the basic properties. For now, we wilrecommend trying to send a basic Enterprise with one sub "Practice" (facility) to the following endpoint:  
 
 [demo.inboxhealth.com/api/partner/v2/enterprises](http://demo.inboxhealth.com/api/partner/v2/enterprises)  
 
@@ -87,6 +86,6 @@ We're currently working on more documentation, but between these initial example
 
 > Written with [StackEdit](https://stackedit.io/).
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzEzOTI0MDE2LC02ODE0NTMwMzUsMTMwMT
-gwMzY1Ml19
+eyJoaXN0b3J5IjpbLTEyMTIzODcwMjUsLTY4MTQ1MzAzNSwxMz
+AxODAzNjUyXX0=
 -->
