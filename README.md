@@ -58,11 +58,15 @@ JSON Body:
 }  
 ```
 The HTTP Response returned from Inbox Health as it will look something like this:
-
+```
+```
 
 
 ### Creating Patients
-Now that you've created your first test Enterprise, let's create the first Patient record to provide a central record to attach future Invoices (charges) and Payments.  Patient records act similar to the Customer objects in other invoicing platforms and are tracked individually; their balances, along with the
+
+Now that you've created your first test Enterprise, let's create the first Patient record to provide a central record to attach future Invoices (charges) and Payments.  Patient records act similar to the Customer objects in other invoicing platforms and are tracked individually; their balances and properties along with the Enterprise's settings and the Enterprise's defined BillingCycleTemplates, govern how and when Inbox Health sends the Patient statements and communication.
+
+```
 {  
 "patient":{  
 "first_name":"Test First Name",  
@@ -73,10 +77,9 @@ Now that you've created your first test Enterprise, let's create the first Patie
 "**enterprise_id**": <<Enterprise ID returned above>>  
 }  
 }  
-  
-
+```
 We're currently working on more documentation, but between these initial examples and the swagger docs I hope you'll be able to get a decent start the feel of the API itself. Don't hesitate to contact us either by email or Slack for quicker responses in our new mutual channe
-- 
+
 ## Creating Patients
 
 ## Assigning Patients a Balance
@@ -87,6 +90,6 @@ We're currently working on more documentation, but between these initial example
 
 > Written with [StackEdit](https://stackedit.io/).
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzg4NDg2MTcxLC02ODE0NTMwMzUsMTMwMT
-gwMzY1Ml19
+eyJoaXN0b3J5IjpbMTE3NjMxMDk0MiwtNjgxNDUzMDM1LDEzMD
+E4MDM2NTJdfQ==
 -->
