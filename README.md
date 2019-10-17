@@ -21,9 +21,7 @@ Authorization: Basic <credentials>
 ## Onboarding New Clients
 
 ### Creating an Enterprise
-The "Enterprise" model is the central record in Inbox Health's API Entities that represents a new customer seeking to bill their patients (whether it is a Hospital, Medical Practice, Therapy Group, or other medical organization).  Thus, the first step to onboarding a new client to the Inbox Health platform is to create their Enterprise record that corresponds to their business and will serve to define many of the basic properties. For now, we will review creating a basic Enterprise with one sub "Practice" (facility) and let Inbox Health set many of the default properties for us:  
-
-[demo.inboxhealth.com/api/partner/v2/enterprises](http://demo.inboxhealth.com/api/partner/v2/enterprises)  
+The "Enterprise" model is the central record in Inbox Health's API Entities that represents a new customer seeking to bill their patients (whether it is a Hospital, Medical Practice, Therapy Group, or other medical organization).  Thus, the first step to onboarding a new client to the Inbox Health platform is to create their Enterprise record that corresponds to their business and will serve to define many of the basic properties. For now, we will review creating a basic Enterprise with one sub "Practice" (facility) and let Inbox Health set many of the default properties for us.  Send the following HTTP Request to the Enterprise POST endpoint available at [demo.inboxhealth.com/api/partner/v2/enterprises](http://demo.inboxhealth.com/api/partner/v2/enterprises)  
 
 JSON Body:
 
@@ -59,7 +57,9 @@ JSON Body:
 	}  
 }  
 ```
-  
+The HTTP Response returned from Inbox Health as it will look something like this:
+
+
 
 ### Creating Patients
 Now that you've created your first Enterprise (client), you will likely want t
@@ -74,6 +74,7 @@ Now that you've created your first Enterprise (client), you will likely want t
 }  
 }  
   
+
 We're currently working on more documentation, but between these initial examples and the swagger docs I hope you'll be able to get a decent start the feel of the API itself. Don't hesitate to contact us either by email or Slack for quicker responses in our new mutual channe
 - 
 ## Creating Patients
@@ -86,6 +87,6 @@ We're currently working on more documentation, but between these initial example
 
 > Written with [StackEdit](https://stackedit.io/).
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTgwNjc3NDAzMywtNjgxNDUzMDM1LDEzMD
-E4MDM2NTJdfQ==
+eyJoaXN0b3J5IjpbLTExNzI4MTA4MjgsLTY4MTQ1MzAzNSwxMz
+AxODAzNjUyXX0=
 -->
