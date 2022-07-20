@@ -1,4 +1,3 @@
-
 # Inbox Health Partner API
 
 This document is meant to accompany and provide a user-friendly overview of the full specifications of the Inbox Health Partner REST API, fully-documented at [rest.demo.inboxhealth.com/api](https://rest.demo.inboxhealth.com/api).  Reading and understand the data model and endpoints outlined by those full specifications is recommended.
@@ -13,12 +12,14 @@ The full specification of the Inbox Health Partner REST API documentation is ava
 In order for your request to be properly authenticated, you will need to supply your API Key as a header in each request you send. Simply add the API Key you generated via the Partner portal above to each HTTP request in a `x-api-key` header.
 
 ## Rate Limiting
-By default, all Partner API users are assigned a Basic Partner usage plan that is rate limited to 1 request per second, with an available burst rate of 40 requests per second. 
+By default, all Partner API users are assigned a Basic Partner usage plan that is rate limited to 1 request per second, with an available burst rate of 40 requests per second.  If this limit is exceeded, your request will not be processed by the application servers in any way and the Inbox Health API will return a HTTP error code of 429, "Too Many Requests".  If this error is encountered, please retry your request and/or build in a client-side rate-limiter to prevent unnecessary extra requests.
 
 ## Onboarding New Clients
 
 ### Creating an Enterprise
-The "Enterprise" model is the central record in Inbox Health's API Entities that represents a new customer seeking to bill their patients (whether it is a Hospital, Medical Practice, Therapy Group, or other medical organization).  Thus, the first step to onboarding a new client to the Inbox Health platform is to create their Enterprise record that corresponds to their business and will serve to define many of the basic properties. For now, we will review creating a basic Enterprise with one sub "Practice" (facility) and let Inbox Health set many of the default properties for us.  Send the following HTTP Request to the Enterprise POST endpoint available at [api.demo.inboxhealth.com/partner/v2/enterprises](http://api.demo.inboxhealth.com/partner/v2/enterprises)  
+The "Enterprise" model is the central record in Inbox Health's API Entities that represents a new customer seeking to bill their patients (whether it is a Hospital, Medical Practice, Therapy Group, or other medical organization).  Thus, the first step to onboarding a new client to the Inbox Health platform is to create their Enterprise record that corresponds to their business and will serve to define many of the basic properties. For now, we will review creating a basic Enterprise with one sub "Practice" (facility) and let Inbox Health set many of the default properties for us.  If you omit `practice_attributes`, or send an empty array, we will create a seed practice for you using the attributes from the enterprise.
+
+Send the following HTTP Request to the Enterprise POST endpoint available at [api.demo.inboxhealth.com/partner/v2/enterprises](http://api.demo.inboxhealth.com/partner/v2/enterprises)  
 
 JSON Body:
 
@@ -276,7 +277,11 @@ This section covers how to create new Invoice, LineItem, and Payment records to 
 This section covers how to define new BillingCycleTemplates, control existing BillingCycles, and send out-of-band communication such a Patient Tickets (SMS, email, and automated voice calls)
 
 ## Subscribing to Webhooks
-This section covers how to receive dynamic updates from Inbox Health via REST API webhooks that ensure API clients are immediately informed upon changes of relevant records in Inbox Health.  Whether the change originates from a patient, provider, administrator or automated system these webhooks are triggered and immediately provide feedback
+This section covers how to receive dynamic updates from Inbox Health via REST API webhooks that ensure API clients are immediately informed upon changes of relevant records in Inbox Health.  Whether the change originates from a patient, provider, administrator or automated system these webhooks are triggered and immediately provide feedback.
+
+### Invoice Updated Webhook
+
+When updating parent properties of an invoice (the date of service, for example), you will receive an invoice updated webhook event. However, when adding line items or invoice payments to an invoice, that will not trigger an invoice updated webhook event. Instead, you will receive the line item/invoice payment created webhook events. 
 
 ## X-InboxHealth-Signature Header
 This section will explain the steps required to reproduce the header X-InboxHealth-Signature which is used to verify that all webhook event requests coming from Inbox Health are authentic and haven’t been tampered with. The X-InboxHealth-Signature header is generated using the HMAC-SHA1 hashing algorithm, with the base signature being generated from the request URL and the POST body parameters, using your secret API key as the signing key. 
@@ -397,7 +402,217 @@ https://coolcompany.com/api/v1/webhookscreated_at=2019-08-29T12%3A06%3A53.000-04
 and using an example API key of `api_key` as our signing key, the X-InboxHealth-Signature would be
 
 `93G+w7p0GC2FB+us2KO8lT/XfZM=`
- 
+
+## A Fully Working C# Example of Onboarding a New Enterprise
+```
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using RestSharp;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace InboxHealthExamples
+{
+    /**
+     * Here's an example using purely RestSharp to call the Partner API.
+     */
+    class Rest
+    {
+        static void Main(string[] args) {
+            var client = new RestClient("http://localhost/partner/v2");
+            client.AddDefaultHeader("x-api-key", "YOUR_API_KEY");
+            client.Timeout = -1;
+
+            /**
+             * The "Enterprise" model is the central record in Inbox Health's API Entities 
+             * that represents a new customer seeking to bill their patients 
+             * (whether it is a Hospital, Medical Practice, Therapy Group, or other medical organization). 
+             * Thus, the first step to onboarding a new client to the Inbox Health platform is to 
+             * create their Enterprise record that corresponds to their business and will serve to define 
+             * many of the basic properties. For now, we will review creating a basic Enterprise 
+             * with one sub "Practice" (facility) and let Inbox Health set many of the default properties for us.
+             */
+            var enterpriseRoot = new {
+                enterprise = new {
+                    name = Faker.Company.Name(),
+                    address_line_1 = Faker.Address.StreetAddress(),
+                    city = Faker.Address.City(),
+                    state = Faker.Address.UsStateAbbr(),
+                    zip = Faker.Address.ZipCode(),
+                    sales_tax = 6.35m,
+                    time_zone = "Eastern Time (US & Canada)",
+                    support_phone_number = "(203) 415-3486",
+                    default_quick_pay_description = "Copay",
+                    statement_descriptor = "LIVE FROM REST",
+                    return_envelope = true,
+                    perforation = true,
+                    practices_attributes = new List<object> {
+                            new {
+                                    name = Faker.Company.Name(),
+                                    address_line_1 = Faker.Address.StreetAddress(),
+                                    city = Faker.Address.City(),
+                                    state = Faker.Address.UsStateAbbr(),
+                                    zip = Faker.Address.ZipCode(),
+                                    time_zone = "Eastern Time (US & Canada)"
+                            }
+                        }
+                }
+            };
+            var request = new RestRequest("enterprises", DataFormat.Json);
+            request.AddJsonBody(enterpriseRoot);
+            var response = client.Post(request);
+            var enterpriseJObject = JsonConvert.DeserializeObject<JObject>(response.Content);
+            Console.WriteLine(enterpriseJObject.ToString());
+
+            /**
+             * Now that the enterprise record has been created, store the enterprise.id field,
+             * as this will serve as the unique identifier for this record,
+             * and form the basis for many other requests for associated records.
+             */
+            int enterpriseId = (int)enterpriseJObject["enterprise"]["id"];
+
+            /**
+             * We're now ready to create a handful of Patient records.
+             * These patients will serve as the central records to attach future Invoices (charges) and Payments. 
+             * Patient records act similar to Customer objects seen in other invoicing platforms 
+             * and are tracked individually; their balances and properties along with the Enterprise's settings 
+             * and the Enterprise's defined BillingCycleTemplates, 
+             * govern how and when Inbox Health sends the Patient statements and communication.
+             */            
+            for (int i = 0; i < 10; ++i) {
+                request = new RestRequest("patients", DataFormat.Json);
+                var patientRoot = new {
+                    patient = new {
+                        enterprise_id = enterpriseId,
+                        first_name = Faker.Name.First(),
+                        last_name = Faker.Name.Last(),
+                        date_of_birth = "1980-01-01",
+                        email = Faker.Internet.Email(),
+                        phone = Faker.Phone.Number(),
+                        address_line_1 = Faker.Address.StreetAddress(),
+                        city = Faker.Address.City(),
+                        state = Faker.Address.UsStateAbbr(),
+                        zip = Faker.Address.ZipCode()
+                    }
+                };
+                request.AddJsonBody(patientRoot);
+                response = client.Post(request);
+
+                Console.WriteLine(JsonConvert.DeserializeObject<JObject>(response.Content).ToString());
+            }
+
+            /**
+             * The next step in onboarding would be to start importing doctors. 
+             * Primarily, doctors will be referenced on invoices. 
+             */
+            for (int i = 0; i < 10; ++i) {
+                request = new RestRequest("doctors", DataFormat.Json);
+                var doctorRoot = new {
+                    doctor = new {
+                        enterprise_id = enterpriseId,
+                        first_name = Faker.Name.First(),
+                        last_name = Faker.Name.Last(),
+                        phone = Faker.Phone.Number(),
+                        specialty = "General Physician",
+                        email = Faker.Internet.Email(),
+                        suffix = "M.D.",
+                        npi = "1234567890"
+                    }
+                };
+                request.AddJsonBody(doctorRoot);
+                response = client.Post(request);
+
+                Console.WriteLine(JsonConvert.DeserializeObject<JObject>(response.Content).ToString());
+            }
+
+            var doctors = JsonConvert.DeserializeObject<JObject>(client.Get(new RestRequest("enterprises/{id}/doctors").AddParameter("id", enterpriseId, ParameterType.UrlSegment)).Content);
+            Console.WriteLine(doctors.ToString());
+
+            /**
+             * We can now get to the fun part! Let's start adding invoices for our patients. 
+             * Invoices are the central vehicle for creating patient balances. 
+             * Invoices contain line items, which tell us not only the procedure/service performed, 
+             * but what's the total charge, how much is covered by insurance
+             * and how much is still owed by insurance for that line item.
+             */
+            var practices = JsonConvert.DeserializeObject<JObject>(client.Get(new RestRequest("enterprises/{id}/practices").AddParameter("id", enterpriseId, ParameterType.UrlSegment)).Content);
+            var patients = JsonConvert.DeserializeObject<JObject>(client.Get(new RestRequest("enterprises/{id}/patients").AddParameter("id", enterpriseId, ParameterType.UrlSegment)).Content);
+            foreach (JObject patient in patients["patients"]) {
+                request = new RestRequest("invoices", DataFormat.Json);
+                /**
+                 * Our test invoices will simply contain one line item each, where 
+                 * insurance owed amount cents is 0, translating the remaining balance (charge - covered) into
+                 * a balance that is now the patient's responsibility. 
+                 * If insurance owed amount cents was any value greater than 0, 
+                 * the invoice would not count towards the patient's total balance yet.
+                 */
+                var invoiceRoot = new {
+                    invoice = new {
+                        patient_id = (int)patient["id"],
+                        practice_id = (int)practices["practices"][0]["id"],
+                        date_of_service = DateTime.Now.ToString("yyyy-MM-dd"),
+                        doctor_id = (int)doctors["doctors"][0]["id"],
+                        notes = "What a wonderful patient!",
+                        estimate = false,
+                        line_items_attributes = new[] {
+                            new {
+                                description = "A medical procedure",
+                                date_of_service = DateTime.Now.ToString("yyyy-MM-dd"),
+                                total_charge_amount_cents = new Random().Next(1000, 10000),
+                                covered_amount_cents = new Random().Next(100, 500),
+                                service_code = "Y93C9",
+                                tax_amount_cents = 10,
+                                quantity = 1,
+                                insurance_owed_amount_cents = 0
+                            }
+                        }
+                    }
+                };
+                request.AddJsonBody(invoiceRoot);
+                response = client.Post(request);
+
+                Console.WriteLine(JsonConvert.DeserializeObject<JObject>(response.Content).ToString());
+            }
+
+            /**
+             * We can re-get our patients to see their updated balances. 
+             */
+            patients = JsonConvert.DeserializeObject<JObject>(client.Get(new RestRequest("enterprises/{id}/patients").AddParameter("id", enterpriseId, ParameterType.UrlSegment)).Content);
+            patients["patients"].ToList().ForEach(p => Console.WriteLine("Patient id " + p["id"] + " has a balance of " + p["balance_cents"]));
+
+            /**
+             * And now we can start importing payments. When importing payments, you need to specify the payment method type. 
+             *
+             * external_card = A card payment made outside of Inbox Health, such as an historical card payment made prior to integrating with Inbox Health.             
+             * card = An Inbox Health card payment, using a saved payment method, that will be processed through Stripe. 
+             * one_time_payment = An Inbox Health card payment, using a Stripe one-time token, that will be processed through Stripe. 
+             *
+             * For initial onboarding, when importing existing, already processed card payments, you use external_card.
+             */
+            request = new RestRequest("payments", DataFormat.Json);
+            var paymentRoot = new {
+                payment = new {
+                    patient_id = (int)patients["patients"][0]["id"],
+                    expected_amount_cents = (int)patients["patients"][0]["balance_cents"],
+                    payment_method_type = "external_card"
+                }
+            };
+            request.AddJsonBody(paymentRoot);
+            response = client.Post(request);
+
+            Console.WriteLine(JsonConvert.DeserializeObject<JObject>(response.Content).ToString());
+
+            /**
+             * And now the patient's balance is updated to $0. 
+             */
+            var patientWithPaidOffBalance = JsonConvert.DeserializeObject<JObject>(client.Get(new RestRequest("patients/{id}").AddParameter("id", patients["patients"][0]["id"], ParameterType.UrlSegment)).Content);
+            Console.WriteLine("Patient id " + patientWithPaidOffBalance["patient"]["id"] + " balance is " + patientWithPaidOffBalance["patient"]["balance_cents"]);
+        }
+    }
+}
+```
+
 ## FAQs
 Please don't hesitate to ask questions via our email, Slack or GitHub Issues.  We'll update this section with common questions as we work to flesh out our documentation.
 
