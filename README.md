@@ -273,8 +273,12 @@ Note that the Enterprise ID (47 in the example case above) should be the ID you 
 ## Managing Patient Balances
 This section covers how to create new Invoice, LineItem, and Payment records to assign, update and manage a Patient's balance in Inbox Health over time.
 
+Content for this section is still under development. Please don't hesitate to contact us by email, GitHub Issues, or Slack for quicker responses.
+
 ## Sending Statements and Communication
 This section covers how to define new BillingCycleTemplates, control existing BillingCycles, and send out-of-band communication such a Patient Tickets (SMS, email, and automated voice calls)
+
+Content for this section is still under development. Please don't hesitate to contact us by email, GitHub Issues, or Slack for quicker responses.
 
 ## Subscribing to Webhooks
 This section covers how to receive dynamic updates from Inbox Health via REST API webhooks that ensure API clients are immediately informed upon changes of relevant records in Inbox Health.  Whether the change originates from a patient, provider, administrator or automated system these webhooks are triggered and immediately provide feedback.
