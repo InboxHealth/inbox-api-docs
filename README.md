@@ -273,10 +273,112 @@ Note that the Enterprise ID (47 in the example case above) should be the ID you 
 ## Managing Patient Balances
 This section covers how to create new Invoice, LineItem, and Payment records to assign, update and manage a Patient's balance in Inbox Health over time.
 
+A patient’s balance is the amount a patient is expected to pay when viewing their bill.  A patient’s balance is calculated from the sum of balances on open invoice records, minus any unapplied patient payments.
+
+To begin creating a patient with a balance, first perform a POST via /partner/v2/invoices with the following invoice and line-item attributes in the following body.
+
+```
+curl --location --request POST 'https://rest.demo.inboxhealth.com/partner/v2/invoices' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/json' \
+--header 'x-api-key;' \
+--data-raw '{
+    "email": "kirby@inboxhealth.com",
+    "invoice": {
+        "patient_id": 2090030,
+        "practice_id": 9169,
+        "date_of_service": "2022-03-03",
+        "doctor_id": 40898,
+        "notes": "Habitual mushroom addiction",
+        "estimate": false,
+        "line_items_attributes": [
+            {
+                "service_code": "A1A1A1",
+                "description": "Psilocybin mushroom testing",
+                "date_of_service": "2022-03-03",
+                "total_charge_amount_cents": 10000,
+                "covered_amount_cents": 1000,
+                "quantity": 1
+            }
+        ]
+    }
+}'
+``` 
+ 
+An invoice is one or more procedures that have been performed on a patient.  These procedures are represented at the line-item level. 
+
+Depending on your internal schema, you may want to create a separate invoice for each procedure, or one invoice that contains multiple procedures.
+
+Each procedure is posted over as a line item record. If you have multiple procedures per line invoice record, you will make a POST request via /partner/v2/line_items with following body: 
+
+```
+ curl --location --request POST 'https://rest.demo.inboxhealth.com/partner/v2/line_items' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/json' \
+--header 'x-api-key;' \
+--data-raw '{    
+    "line_item": {
+        "invoice_id": 5090278,
+	 "service_code": "A0134",
+        "description": "Another procedure",
+        "date_of_service": "2022-03-03",
+        "total_charge_amount_cents": 5000,
+        "covered_amount_cents": 1000,
+        "quantity": 1
+    }
+}'
+```
+ 
+Once you have created an invoice with one or more line items, you can then create invoice payment records that belong to that invoice.
+
+To create a payment, perform a POST request via /partner/v2/payments with the following body:
+
+```
+curl --location --request POST 'https://rest.demo.inboxhealth.com/partner/v2/payments' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/json' \
+--header 'x-api-key;' \
+--data-raw '{
+    "payment": {
+        "patient_id": 2090030,
+        "expected_amount_cents": 1000,
+        "payment_method_type": "external_card",
+        "description": "A patient payment",
+        "apply_payment": false
+    }
+}'
+```
+
+Once that payment is created, if that payment is applied to invoice, create the invoice payment records to relate those payment(s) against invoices with a POST request via /partner​/v2​/invoice_payments  
+
+```
+curl --location --request POST 'https://rest.demo.inboxhealth.com/partner/v2/invoice_payments' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/json' \
+--header 'x-api-key;' \
+--data-raw '{    
+    "invoice_payment": {
+        "payment_id": 5393470,
+        "invoice_id": 5090278,
+        "paid_amount_cents": 500
+    }
+}'
+```
+
+A few common items to note:
+*For a patient who has a patient balance and no outstanding insurance balance, please ensure the total_insurance_balance_cents of the invoice is equal to the sum of the amount_cents of the insurance payments on the invoice.  (Insurance Payment is defined as a payment with a payment_method_type of ‘insurance’.)
+*If a payment has been refunded from your PM system, either reduce the amount_cents of the invoice payment, the expected_amount_cents of the payment, and/or create a line_item on the invoice to offset the amount of the refund.
+*If you would like your payments to include the reason why insurance paid, create a payment reason record (available via POST/PUT on the invoice_payment or POST for payment_reasons). If the insurance didn’t pay but you still want to note it, create a $0 invoice payment and payment reason for that invoice.
+
+Once you have created all the invoices, line_items, and payments for a patient, you can perform a GET request against the patient and their invoices to confirm you have been able to correctly calculate the patient's balance.  Once this has been validated, you may continue testing and move to the statement process.
+
 See specific APIs here in our spec: 
 * https://rest.demo.inboxhealth.com/api#/invoices
 * https://rest.demo.inboxhealth.com/api#/payments
 * https://rest.demo.inboxhealth.com/api#/line_items
+* https://rest.demo.inboxhealth.com/api#/invoice_payments
+* https://rest.demo.inboxhealth.com/api#/payment_reasons
+
 
 ## Sending Statements and Communication
 This section covers how to define new BillingCycleTemplates, control existing BillingCycles, and send out-of-band communication such a Patient Tickets (SMS, email, and automated voice calls)
