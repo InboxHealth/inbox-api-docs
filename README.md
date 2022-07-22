@@ -381,7 +381,23 @@ See specific APIs here in our spec:
 
 
 ## Sending Statements and Communication
-This section covers how to define new BillingCycleTemplates, control existing BillingCycles, and send out-of-band communication such a Patient Tickets (SMS, email, and automated voice calls)
+This section covers the API and business workflows for sending and receiving statements, in addition to how to listen to webhooks for getting updates on the notifications a patient has received.
+
+At Inbox Health, the statement process is primarily managed through our patented billing cycle process. Based on discussions with your business teams, our team will recommend or take recommendations on the best billing process for your practice. Once your team has been given billing cycles to cycle. While configuring your enterprises, you can call a POST or PUT request via /partner/v2/enterprises to update the template your business chooses.
+
+Once a patient is in Inbox Health (or while posting the patient), you can choose when to begin billing for the patient. Inbox Health billing cycle has built in logic to decide when and how to bill a patient.  This logic can be overridden by calling a PUT to patients to change their billing status, which dictates whether or not a patient should receive statements. For ease of use, most partners opt for the logic of when patients should initially receive statements to the business rules dictated by your client-facing team. 
+
+This logic is described below:
+
+1. A patient record is recommended to be posted via /partner/v2/patients with a billing status with the string ‘complete’. A complete billing status means the patient is not scheduled for any action to the patient (to send a statement, to send to collections, to suspend from billing etc). 
+2. From complete, if a patient has a positive patient balance and is configured, the patient will change to a billing status of billable, or ready to start billing.
+3. From Billable, if the patient was manually or automatically chosen to start the billing process, they will be moved to a scheduled billing status. A patient can be moved automatically to a scheduled status via an API call to the patient’s endpoint. Once the patient is a scheduled billing status, the patient will be placed on a billing cycle.
+4. Once the patient is in a billing cycle, a patient will follow the billing cycle template present on the enterprise at the time of creation of the billing cycle.
+5. Once on a billing cycle, a patient will move to various billing statuses including complete, no_response, or collections. 
+ Once a patient has been automatically set as complete, the patient will begin this workflow again. 
+In addition, if you have certain patients who have a category in your PM system that prevents them from billing, you could also create account_types.  An example of an account type would be if a patient was listed as a “no statements” status in your PM system.  Then, once the patient changed to an account type that should bill, such as “typical account”, the patient would begin billing again.
+You would first create the account types with a POST request via /partner/v2/account_types.  This should include the account types you would like for your patients to be eligible for.  Once you have input your account types, your new or existing patients can be created or updated to add an account type. In addition, you could simply mark a patient as a billing status of excluded via a PUT on patients.  
+Once a patient is on a billing cycle and they are receiving statements or asking questions about their bills you can listen to notifications webhooks or issue a GET request via /partner/v2/patients/{id}/notifications to add information about those notifications to your PM system if desired.
 
 See specific APIs here in our spec: 
 * https://rest.demo.inboxhealth.com/api#/notifications
