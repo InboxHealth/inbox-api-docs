@@ -366,8 +366,11 @@ curl --location --request POST 'https://rest.demo.inboxhealth.com/partner/v2/inv
 ```
 
 A few common items to note:
-*For a patient who has a patient balance and no outstanding insurance balance, please ensure the total_insurance_balance_cents of the invoice is equal to the sum of the amount_cents of the insurance payments on the invoice.  (Insurance Payment is defined as a payment with a payment_method_type of ‘insurance’.)
+
+*For a patient who has a patient balance and no outstanding insurance balance, please ensure the total_insurance_balance_cents of the invoice is equal to 0.  In addition, this requires the sum of the amount_cents of the insurance payments on the invoice to be equal to the total_insurance_balance_cents before the payments are applied to the invoice via invoice_payments.  (Insurance Payment is defined as a payment with a payment_method_type of ‘insurance’.)
+
 *If a payment has been refunded from your PM system, either reduce the amount_cents of the invoice payment, the expected_amount_cents of the payment, and/or create a line_item on the invoice to offset the amount of the refund.
+
 *If you would like your payments to include the reason why insurance paid, create a payment reason record (available via POST/PUT on the invoice_payment or POST for payment_reasons). If the insurance didn’t pay but you still want to note it, create a $0 invoice payment and payment reason for that invoice.
 
 Once you have created all the invoices, line_items, and payments for a patient, you can perform a GET request against the patient and their invoices to confirm you have been able to correctly calculate the patient's balance.  Once this has been validated, you may continue testing and move to the statement process.
