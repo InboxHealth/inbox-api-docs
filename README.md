@@ -741,6 +741,191 @@ namespace InboxHealthExamples
 }
 ```
 
+## Payment Adjustments
+Our API supports the ability to create `payment_adjustment` records through the `POST /partner/v2/payment_adjustments` endpoint. These represent payment amount adjustments to be made to any payment in Inbox Health, which can be useful to represent payment refunds, reversals, or even fully voiding the payment from the patient's account. 
+
+As an example, let's say a patient in Inbox Health has a `external_card` payment of $50.00, that has been applied to an invoice in Inbox Health, as well. For one reason or another, we need to reduce the payment amount by $10.00. We don't support updating a payment's `expected_amount_cents` attribute directly by issuing a `PUT /partner/v2/payments` request. Instead, these are tracked as `payment_adjustment` records, which also allows you to control how the payment adjustment will affect the patient's balance.
+
+First, lets do a `GET /partner/v2/patients/<id_of_patient>` to see what their current `cached_balance_cents` is. 
+
+```
+REQUEST:
+
+curl --location --request GET 'api.demo.inboxhealth.com/partner/v2/patients/<id_of_patient>' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/json' \
+--header 'x-api-key: <your_api_key>'
+
+RESPONSE:
+
+{
+    "patient": {
+        "id": 2173800,
+        ...
+        "cached_balance_cents": 9956,
+        ...
+    }
+}
+```
+
+Now, lets issue a `POST /partner/v2/payment_adjustments` request to refund $10.00 of the payment.
+
+```
+REQUEST:
+curl --location --request POST 'api.demo.inboxhealth.com/partner/v2/payment_adjustments' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: <your_api_key>' \
+--data-raw '{
+    "voided": false,
+	"payment_adjustment": {		
+		"payment_id": <id_of_payment_to_adjust>,
+		"amount_cents": 1000
+	}
+}'
+
+RESPONSE:
+{
+    "payment_adjustment": {
+        "id": 128,
+        "payment_id": <id_of_payment_to_adjust>,
+        "payment_processing_refund_id": null,
+        "created_at": "2022-09-21T18:38:40.917Z",
+        "updated_at": "2022-09-21T18:38:40.917Z",
+        "transfer_id": null,
+        "status": "refunded",
+        "created_by_user_id": 1,
+        "amount_cents": 1000
+    }
+}
+```
+
+And if we were to do a `GET /partner/v2/payments/<id_of_payment_to_adjust>` for this payment, we'd get a response JOSN body that contains the following updated attributes (most payment attributes omitted for brevity)
+```
+REQUEST:
+curl --location --request GET 'api.demo.inboxhealth.com/partner/v2/payments/<id_of_payment_to_adjust>' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/json' \
+--header 'x-api-key: <your_api_key>'
+
+RESPONSE:
+{
+    "payment": {
+        "id": <id_of_payment_to_adjust>,        
+        "status": "partially refunded",
+        "successful": true,        
+        "payment_method_type": "external_card",        
+        "expected_amount_cents": 5000,
+        "refunded_amount_cents": 1000,        
+        "applied_amount_cents": 5000,
+    }
+}
+```
+
+As you can see, the payment is now updated to have a refunded_amount_cents value of 1000 and is marked as being `partially_refunded`; creating a payment adjustment that is equal to the payment `expected_amount_cents` would result in a `refunded` status.
+
+> However, it's very important to note that this type of payment adjustment doesn't affect either the patient balance, or even the balance of any invoice the payment may be applied to. 
+
+We can confirm this by doing another `GET /partner/v2/patients/<id_of_patient>` to see that their `cached_balance_cents` value is unchanged.
+
+```
+REQUEST:
+
+curl --location --request GET 'api.demo.inboxhealth.com/partner/v2/patients/<id_of_patient>' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/json' \
+--header 'x-api-key: <your_api_key>'
+
+RESPONSE:
+
+{
+    "patient": {
+        "id": <id_of_patient>,
+        ...
+        "cached_balance_cents": 9956,
+        ...
+    }
+}
+```
+
+The reason the payment adjustment didn't affect any balances is due to the request JSON body specifying `voided: false`. This is a key boolean for creating payment adjustments as it determines whether the payment is to be considered voided, which when `true` the payment will no longer affect any patient or invoice balances. 
+
+> You cannot void a portion of a payment's amount. When voiding a payment, the entire payment amount must be refunded and voided. 
+
+Going back to our example, if we want to void the payment, and no longer have the payment's total `expected_amount_cents` be applied to the patient's balance, we instead submit the following `POST /partner/v2/payment_adjustments` request JSON body, with `voided` set to `true` and `amount_cents` equaling the payment's `expected_amount_cents`.
+```
+REQUEST:
+curl --location --request POST 'api.demo.inboxhealth.com/partner/v2/payment_adjustments' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: <your_api_key>' \
+--data-raw '{
+    "voided": true,
+	"payment_adjustment": {		
+		"payment_id": <id_of_payment_to_adjust>,
+		"amount_cents": 5000
+	}
+}'
+
+RESPONSE:
+{
+    "payment_adjustment": {
+        "id": 129,
+        "payment_id": <id_of_payment_to_adjust>,
+        "payment_processing_refund_id": null,
+        "created_at": "2022-09-21T19:05:02.658Z",
+        "updated_at": "2022-09-21T19:05:02.658Z",
+        "transfer_id": null,
+        "status": "refunded",
+        "created_by_user_id": 1,
+        "amount_cents": 5000
+    }
+}
+```
+
+And if we were to do a `GET /partner/v2/payments/<id_of_payment_to_adjust>` for this payment, we'd get a response JOSN body that contains the following updated attributes (most payment attributes omitted for brevity)
+
+```
+REQUEST:
+curl --location --request GET 'api.demo.inboxhealth.com/partner/v2/payments/<id_of_payment_to_adjust>' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/json' \
+--header 'x-api-key: <your_api_key>'
+
+RESPONSE:
+{
+    "payment": {
+        "id": <id_of_payment_to_adjust>,        
+        "status": "refunded",
+        "successful": true,        
+        "payment_method_type": "external_card",        
+        "expected_amount_cents": 5000,
+        "refunded_amount_cents": 5000,        
+        "applied_amount_cents": 0,
+    }
+}
+```
+
+Notice that `refunded_amount_cents` is now equal to the `expected_amount_cents`, but `applied_amount_cents` is now 0, meaning that any associated `invoice_payment` records for this payment were also deleted, as a result of being voided. And now if we take a look at our patient balance, we see that it is $50 higher than before we created the payment adjustment. 
+
+```
+REQUEST:
+
+curl --location --request GET 'api.demo.inboxhealth.com/partner/v2/patients/<id_of_patient>' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/json' \
+--header 'x-api-key: <your_api_key>'
+
+RESPONSE:
+
+{
+    "patient": {
+        "id": <id_of_patient>,
+        ...
+        "cached_balance_cents": 14956,
+        ...
+    }
+}
+```
+
 ## FAQs
 Please don't hesitate to ask questions via our email, Slack or GitHub Issues.  We'll update this section with common questions as we work to flesh out our documentation.
 
