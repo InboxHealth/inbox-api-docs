@@ -760,7 +760,7 @@ RESPONSE:
 
 {
     "patient": {
-        "id": 2173800,
+        "id": <id_of_patient>,
         ...
         "cached_balance_cents": 9956,
         ...
