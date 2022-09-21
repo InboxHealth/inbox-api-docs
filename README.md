@@ -821,9 +821,9 @@ RESPONSE:
 }
 ```
 
-As you can see, the payment is now updated to have a refunded_amount_cents value of 1000 and is marked as being `partially_refunded`; creating a payment adjustment that is equal to the payment `expected_amount_cents` would result in a `refunded` status.
+As you can see, the payment is now updated to have a `refunded_amount_cents` value of 1000 and is marked as being `partially_refunded`; creating a payment adjustment that is equal to the payment `expected_amount_cents` would result in a `refunded` status.
 
-> However, it's very important to note that this type of payment adjustment doesn't affect either the patient balance, or even the balance of any invoice the payment may be applied to. 
+> However, it's very important to note that this type of payment adjustment DOES NOT affect either the patient balance, or even the balance of any invoice the payment may be applied to. 
 
 We can confirm this by doing another `GET /partner/v2/patients/<id_of_patient>` to see that their `cached_balance_cents` value is unchanged.
 
@@ -847,7 +847,7 @@ RESPONSE:
 }
 ```
 
-The reason the payment adjustment didn't affect any balances is due to the request JSON body specifying `voided: false`. This is a key boolean for creating payment adjustments as it determines whether the payment is to be considered voided, which when `true` the payment will no longer affect any patient or invoice balances. 
+The reason the payment adjustment didn't affect any balances is due to the request JSON body specifying `voided: false`. This is a key boolean for creating payment adjustments as it determines whether the payment is to be considered voided, which when `true`, the payment will no longer affect any patient or invoice balances. 
 
 > You cannot void a portion of a payment's amount. When voiding a payment, the entire payment amount must be refunded and voided. 
 
@@ -868,7 +868,7 @@ curl --location --request POST 'api.demo.inboxhealth.com/partner/v2/payment_adju
 RESPONSE:
 {
     "payment_adjustment": {
-        "id": 129,
+        "id": 128,
         "payment_id": <id_of_payment_to_adjust>,
         "payment_processing_refund_id": null,
         "created_at": "2022-09-21T19:05:02.658Z",
@@ -904,7 +904,7 @@ RESPONSE:
 }
 ```
 
-Notice that `refunded_amount_cents` is now equal to the `expected_amount_cents`, but `applied_amount_cents` is now 0, meaning that any associated `invoice_payment` records for this payment were also deleted, as a result of being voided. And now if we take a look at our patient balance, we see that it is $50 higher than before we created the payment adjustment. 
+Notice that `refunded_amount_cents` is now equal to the `expected_amount_cents`, and `applied_amount_cents` is now `0`, meaning that any associated `invoice_payment` records for this payment were also deleted, as a result of being voided. And now if we take a look at our patient balance, we see that it is $50 higher than before we created the payment adjustment. 
 
 ```
 REQUEST:
