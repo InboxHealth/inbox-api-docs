@@ -11,7 +11,7 @@ The full specification of the Inbox Health Partner REST API documentation is ava
 ## Postman Collection
 The best way to get comfortable with our Partner API is to explore our pre-configured Postman Collection, which is setup to work against https://api.demo.inboxhealth.com and has various collection variables to make sending requests simple. [Postman](https://www.postman.com/) is a popular API development tool for creating, exploring and testing web APIs. Documentation on how to import a Collection can be found at https://learning.postman.com/docs/getting-started/importing-and-exporting-data/#importing-data-into-postman. 
 
-The Collection JSON file is available at the root of this repo as `InboxHealth Api.postman_collection.json`
+The Collection JSON file is available at the root of this repo at [InboxHealth Api.postman_collection.json](https://github.com/InboxHealth/inbox-api-docs/blob/a063274ebb45224e37f651190de3459c8cf0d47a/InboxHealth%20API.postman_collection.json)
 
 ### Variables
 You can leave `host` as configured, as this will result in executing all requests against our demo environment. 
