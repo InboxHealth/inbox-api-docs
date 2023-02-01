@@ -26,7 +26,7 @@ You can leave `host` as configured, as this will result in executing all request
 In order for your request to be properly authenticated, you will need to supply your API Key as a header in each request you send. Simply add the API Key you generated via the Partner portal above to each HTTP request in a `x-api-key` header.
 
 ## Rate Limiting
-By default, all Partner API users are assigned a Basic Partner usage plan that is rate limited to 1 request per second, with an available burst rate of 40 requests per second.  If this limit is exceeded, your request will not be processed by the application servers in any way and the Inbox Health API will return a HTTP error code of 429, "Too Many Requests".  If this error is encountered, please retry your request and/or build in a client-side rate-limiter to prevent unnecessary extra requests.
+By default, all Partner API users are assigned a Basic Partner usage plan that is rate limited to 10 requests per second, with an available burst rate of 100 requests per second.  If this limit is exceeded, your request will not be processed by the application servers in any way and the Inbox Health API will return a HTTP error code of 429, "Too Many Requests".  If this error is encountered, please retry your request and/or build in a client-side rate-limiter to prevent unnecessary extra requests.
 
 ## Onboarding New Clients
 
