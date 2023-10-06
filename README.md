@@ -418,8 +418,8 @@ See specific APIs here in our spec:
 * https://rest.demo.inboxhealth.com/api#/notifications
 * https://rest.demo.inboxhealth.com/api#/patients
 
-## Patient Model Communication Attributes
-### Phone Numbers
+### Patient Model Communication Attributes
+#### Phone Numbers
 The Patient model has three possible phone numbers for communications. These are used for sending SMS messages, including messages for statements. We attempt to send SMS messages to their available numbers in the following order:
 * `cell_phone`
 * `secondary_phone`
