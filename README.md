@@ -418,6 +418,13 @@ See specific APIs here in our spec:
 * https://rest.demo.inboxhealth.com/api#/notifications
 * https://rest.demo.inboxhealth.com/api#/patients
 
+## Patient Model Communication Attributes
+### Phone Numbers
+The Patient model has three possible phone numbers for communications. These are used for sending SMS messages, including messages for statements. We attempt to send SMS messages to their available numbers in the following order:
+* `cell_phone`
+* `secondary_phone`
+* `home_phone`
+
 ## Subscribing to Webhooks
 This section covers how to receive dynamic updates from Inbox Health via REST API webhooks that ensure API clients are immediately informed upon changes of relevant records in Inbox Health.  Whether the change originates from a patient, provider, administrator or automated system these webhooks are triggered and immediately provide feedback.
 
